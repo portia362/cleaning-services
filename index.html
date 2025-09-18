@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleaning Service Request</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+  }
+  
+  .header h2 {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 5px;
+  }
+  
+  .header p {
+    opacity: 0.9;
+    font-size: 14px;
+  }
+  
+  .form-container {
+    padding: 30px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="time"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #fff;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #4facfe;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .checkbox-item label {
+    cursor: pointer;
+    margin: 0;
+    font-weight: 400;
+  }
+  
+  .btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-submit:active {
+    transform: translateY(0);
+  }
+  
+  .price-display {
+    background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #2d3436;
+  }
+  
+  @media (max-width: 600px) {
+    body {
+      padding: 10px;
+    }
+    
+    .form-container {
+      padding: 20px;
+    }
+    
+    .header h2 {
+      font-size: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>✨ CleanPro Services</h2>
+      <p>Professional cleaning at your fingertips</p>
+    </div>
+    
+    <div class="form-container">
+      <form id="cleaningForm">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="address">Property Address *</label>
+          <textarea id="address" name="address" required placeholder="Enter your full address including apartment/unit number"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="propertyType">Property Type *</label>
+          <select id="propertyType" name="propertyType" required>
+            <option value="">Select property type</option>
+            <option value="apartment">Apartment</option>
+            <option value="house">House</option>
+            <option value="condo">Condo</option>
+            <option value="office">Office</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="size">Property Size (sq ft) *</label>
+          <input type="text" id="size" name="size" required placeholder="e.g., 1200">
+        </div>
+        
+        <div class="form-group">
+          <label for="bedrooms">Number of Bedrooms</label>
+          <select id="bedrooms" name="bedrooms">
+            <option value="">Select bedrooms</option>
+            <option value="0">Studio</option>
+            <option value="1">1 Bedroom</option>
+            <option value="2">2 Bedrooms</option>
+            <option value="3">3 Bedrooms</option>
+            <option value="4">4 Bedrooms</option>
+            <option value="5+">5+ Bedrooms</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="bathrooms">Number of Bathrooms</label>
+          <select id="bathrooms" name="bathrooms">
+            <option value="">Select bathrooms</option>
+            <option value="1">1 Bathroom</option>
+            <option value="1.5">1.5 Bathrooms</option>
+            <option value="2">2 Bathrooms</option>
+            <option value="2.5">2.5 Bathrooms</option>
+            <option value="3">3 Bathrooms</option>
+            <option value="3.5+">3.5+ Bathrooms</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Cleaning Services Required *</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="general" name="services" value="general">
+              <label for="general">General Cleaning</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="deep" name="services" value="deep">
+              <label for="deep">Deep Cleaning</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="kitchen" name="services" value="kitchen">
+              <label for="kitchen">Kitchen Deep Clean</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="bathroom" name="services" value="bathroom">
+              <label for="bathroom">Bathroom Deep Clean</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="windows" name="services" value="windows">
+              <label for="windows">Window Cleaning</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="carpet" name="services" value="carpet">
+              <label for="carpet">Carpet Cleaning</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="moveout" name="services" value="moveout">
+              <label for="moveout">Move-out Cleaning</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="frequency">Cleaning Frequency *</label>
+          <select id="frequency" name="frequency" required>
+            <option value="">Select frequency</option>
+            <option value="one-time">One-time service</option>
+            <option value="weekly">Weekly</option>
+            <option value="bi-weekly">Bi-weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="date">Preferred Date *</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="time">Preferred Time *</label>
+          <input type="time" id="time" name="time" required>
+        </div>
+        
+        <div class="price-display" id="priceDisplay">
+          Estimated Cost: Please fill out the form for pricing
+        </div>
+        
+        <div class="form-group">
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" name="notes" placeholder="Any special instructions, areas of focus, or additional information"></textarea>
+        </div>
+        
+        <button type="submit" class="btn-submit">Request Cleaning Service</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Form data storage
+    let formData = {};
+    
+    // Basic pricing structure
+    const pricing = {
+      general: { base: 80, perSqFt: 0.08 },
+      deep: { base: 120, perSqFt: 0.12 },
+      kitchen: { base: 50, perSqFt: 0 },
+      bathroom: { base: 40, perSqFt: 0 },
+      windows: { base: 60, perSqFt: 0.05 },
+      carpet: { base: 100, perSqFt: 0.15 },
+      moveout: { base: 150, perSqFt: 0.1 }
+    };
+    
+    const frequencyMultipliers = {
+      'one-time': 1,
+      'weekly': 0.9,
+      'bi-weekly': 0.95,
+      'monthly': 1
+    };
+
+    function calculatePrice() {
+      const size = parseInt(document.getElementById('size').value) || 0;
+      const frequency = document.getElementById('frequency').value;
+      const services = document.querySelectorAll('input[name="services"]:checked');
+      
+      if (!size || !frequency || services.length === 0) {
+        return 'Please fill out the form for pricing';
+      }
+      
+      let totalCost = 0;
+      
+      services.forEach(service => {
+        const serviceType = service.value;
+        if (pricing[serviceType]) {
+          totalCost += pricing[serviceType].base + (pricing[serviceType].perSqFt * size);
+        }
+      });
+      
+      if (frequencyMultipliers[frequency]) {
+        totalCost *= frequencyMultipliers[frequency];
+      }
+      
+      return `Estimated Cost: $${Math.round(totalCost)}`;
+    }
+    
+    function updatePrice() {
+      document.getElementById('priceDisplay').textContent = calculatePrice();
+    }
+    
+    // Add event listeners for price calculation
+    document.getElementById('size').addEventListener('input', updatePrice);
+    document.getElementById('frequency').addEventListener('change', updatePrice);
+    document.querySelectorAll('input[name="services"]').forEach(checkbox => {
+      checkbox.addEventListener('change', updatePrice);
+    });
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('min', today);
+    
+    // Form submission with mailto
+    document.getElementById('cleaningForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate required fields
+      const requiredFields = ['name', 'email', 'phone', 'address', 'propertyType', 'size', 'frequency', 'date', 'time'];
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        const input = document.getElementById(field);
+        if (!input.value.trim()) {
+          input.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          input.style.borderColor = '#e1e5e9';
+        }
+      });
+      
+      // Check if at least one service is selected
+      const services = [];
+      document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
+        services.push(checkbox.value);
+      });
+      
+      if (services.length === 0) {
+        alert('Please select at least one cleaning service.');
+        return;
+      }
+      
+      if (!isValid) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+      
+      // Collect all form data
+      const formData = new FormData(this);
+      
+      // Format services nicely
+      const servicesText = services.map(service => {
+        return service.charAt(0).toUpperCase() + service.slice(1).replace(/([A-Z])/g, ' $1');
+      }).join(', ');
+      
+      // Create email content
+      const subject = `New Cleaning Service Request - ${formData.get('name')}`;
+      const body = `
+CLEANING SERVICE REQUEST
+========================
+
+CUSTOMER INFORMATION:
+Name: ${formData.get('name')}
+Email: ${formData.get('email')}
+Phone: ${formData.get('phone')}
+
+PROPERTY DETAILS:
+Address: ${formData.get('address')}
+Property Type: ${formData.get('propertyType')}
+Size: ${formData.get('size')} sq ft
+Bedrooms: ${formData.get('bedrooms') || 'Not specified'}
+Bathrooms: ${formData.get('bathrooms') || 'Not specified'}
+
+SERVICE DETAILS:
+Services Requested: ${servicesText}
+Frequency: ${formData.get('frequency')}
+Preferred Date: ${formData.get('date')}
+Preferred Time: ${formData.get('time')}
+${calculatePrice()}
+
+ADDITIONAL NOTES:
+${formData.get('notes') || 'None'}
+
+========================
+Please contact the customer to confirm this appointment.
+      `.trim();
+      
+      // Create mailto link
+      const emailAddress = 'portia.atposhprojects@gmail.com'; // Change this to your actual email
+      const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Open email client
+      window.location.href = mailtoLink;
+      
+      // Show confirmation after a short delay
+      setTimeout(() => {
+        showConfirmation({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          services: servicesText,
+          date: formData.get('date'),
+          time: formData.get('time'),
+          estimatedCost: calculatePrice()
+        });
+      }, 1000);
+    });
+    
+    function showConfirmation(data) {
+      const confirmationHTML = `
+        <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 10px; padding: 20px; margin: 20px 0;">
+          <h3 style="color: #155724; margin-bottom: 15px;">📧 Email Opened Successfully!</h3>
+          <p style="color: #155724; margin-bottom: 15px;">Thank you, ${data.name}! Your email client should have opened with your cleaning request details.</p>
+          <div style="background: white; padding: 15px; border-radius: 8px; font-size: 14px; color: #333;">
+            <strong>Next Steps:</strong><br>
+            1. ✅ Review the pre-filled email content<br>
+            2. 📧 Click "Send" in your email client<br>
+            3. ⏰ We'll respond within 24 hours<br><br>
+            
+            <strong>Your Request Summary:</strong><br>
+            📅 Date: ${data.date} at ${data.time}<br>
+            🧹 Services: ${data.services}<br>
+            💰 ${data.estimatedCost}<br><br>
+            
+            <em>If your email didn't open automatically, please contact us at: <strong>portia.atposhprojects@gmail.com</strong></em>
+          </div>
+          <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Submit Another Request
+          </button>
+        </div>
+      `;
+      
+      document.querySelector('.form-container').innerHTML = confirmationHTML;
+    }
+  </script>
+</body>
+</html>
