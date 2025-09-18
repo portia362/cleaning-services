@@ -143,16 +143,6 @@
     transform: translateY(0);
   }
   
-  .price-display {
-    background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    margin: 20px 0;
-    font-weight: bold;
-    color: #2d3436;
-  }
-  
   @media (max-width: 600px) {
     body {
       padding: 10px;
@@ -295,10 +285,6 @@
           <input type="time" id="time" name="time" required>
         </div>
         
-        <div class="price-display" id="priceDisplay">
-          Estimated Cost: Please fill out the form for pricing
-        </div>
-        
         <div class="form-group">
           <label for="notes">Additional Notes</label>
           <textarea id="notes" name="notes" placeholder="Any special instructions, areas of focus, or additional information"></textarea>
@@ -310,68 +296,11 @@
   </div>
 
   <script>
-    // Form data storage
-    let formData = {};
-    
-    // Basic pricing structure
-    const pricing = {
-      general: { base: 80, perSqFt: 0.08 },
-      deep: { base: 120, perSqFt: 0.12 },
-      kitchen: { base: 50, perSqFt: 0 },
-      bathroom: { base: 40, perSqFt: 0 },
-      windows: { base: 60, perSqFt: 0.05 },
-      carpet: { base: 100, perSqFt: 0.15 },
-      moveout: { base: 150, perSqFt: 0.1 }
-    };
-    
-    const frequencyMultipliers = {
-      'one-time': 1,
-      'weekly': 0.9,
-      'bi-weekly': 0.95,
-      'monthly': 1
-    };
-
-    function calculatePrice() {
-      const size = parseInt(document.getElementById('size').value) || 0;
-      const frequency = document.getElementById('frequency').value;
-      const services = document.querySelectorAll('input[name="services"]:checked');
-      
-      if (!size || !frequency || services.length === 0) {
-        return 'Please fill out the form for pricing';
-      }
-      
-      let totalCost = 0;
-      
-      services.forEach(service => {
-        const serviceType = service.value;
-        if (pricing[serviceType]) {
-          totalCost += pricing[serviceType].base + (pricing[serviceType].perSqFt * size);
-        }
-      });
-      
-      if (frequencyMultipliers[frequency]) {
-        totalCost *= frequencyMultipliers[frequency];
-      }
-      
-      return `Estimated Cost: $${Math.round(totalCost)}`;
-    }
-    
-    function updatePrice() {
-      document.getElementById('priceDisplay').textContent = calculatePrice();
-    }
-    
-    // Add event listeners for price calculation
-    document.getElementById('size').addEventListener('input', updatePrice);
-    document.getElementById('frequency').addEventListener('change', updatePrice);
-    document.querySelectorAll('input[name="services"]').forEach(checkbox => {
-      checkbox.addEventListener('change', updatePrice);
-    });
-    
     // Set minimum date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').setAttribute('min', today);
     
-    // Form submission with mailto
+    // Form submission with email functionality
     document.getElementById('cleaningForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
@@ -436,7 +365,6 @@ Services Requested: ${servicesText}
 Frequency: ${formData.get('frequency')}
 Preferred Date: ${formData.get('date')}
 Preferred Time: ${formData.get('time')}
-${calculatePrice()}
 
 ADDITIONAL NOTES:
 ${formData.get('notes') || 'None'}
@@ -446,7 +374,7 @@ Please contact the customer to confirm this appointment.
       `.trim();
       
       // Create mailto link
-      const emailAddress = 'portia.atposhprojects@gmail.com'; // Change this to your actual email
+      const emailAddress = 'portia.atposhprojects@gmail.com';
       const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       
       // Open email client
@@ -459,8 +387,7 @@ Please contact the customer to confirm this appointment.
           email: formData.get('email'),
           services: servicesText,
           date: formData.get('date'),
-          time: formData.get('time'),
-          estimatedCost: calculatePrice()
+          time: formData.get('time')
         });
       }, 1000);
     });
@@ -478,8 +405,7 @@ Please contact the customer to confirm this appointment.
             
             <strong>Your Request Summary:</strong><br>
             📅 Date: ${data.date} at ${data.time}<br>
-            🧹 Services: ${data.services}<br>
-            💰 ${data.estimatedCost}<br><br>
+            🧹 Services: ${data.services}<br><br>
             
             <em>If your email didn't open automatically, please contact us at: <strong>portia.atposhprojects@gmail.com</strong></em>
           </div>
